@@ -1,8 +1,11 @@
 cask "nyora" do
-  version "2.0.6"
-  sha256 "47431d843eda629734efaba9644d9054171fe2b808a8363ed1e62d10c295eb83"
+  arch arm: "arm64", intel: "x64"
 
-  url "https://github.com/Nyora-Manga/nyora-mac/releases/download/v#{version}/Nyora-#{version}.dmg",
+  version "3.1.12"
+  sha256 arm:   "227d51df04d855dba4039bc67114c9a3480ced043c3afa8e9f9f2176d49d3e41",
+         intel: "e1c441af35acff25c413775e7f39e44aaf2f0ad3aee449d7bbf30eaddbd0ad17"
+
+  url "https://github.com/Nyora-Manga/nyora-mac/releases/download/v#{version}/Nyora-#{version}-mac-#{arch}.dmg",
       verified: "github.com/Nyora-Manga/nyora-mac/"
   name "Nyora"
   desc "AI-powered manga reader"
@@ -15,13 +18,13 @@ cask "nyora" do
     strategy :github_latest
   end
 
-  # The published build bundles an arm64 runtime.
-  depends_on arch: :arm64
+  # Electron desktop build, published for both Apple Silicon and Intel.
+  depends_on macos: ">= :sonoma"
 
   app "Nyora.app"
 
   caveats <<~EOS
-    Nyora is ad-hoc signed, not notarised, so macOS blocks it on first launch.
+    Nyora is not notarised, so macOS blocks it on first launch.
     Allow it once via  System Settings → Privacy & Security → "Open Anyway",
     or clear the download quarantine:
 
@@ -33,8 +36,9 @@ cask "nyora" do
   EOS
 
   zap trash: [
-    "~/Library/Application Support/Nyora",
-    "~/Library/Preferences/com.nyora.mac.plist",
-    "~/Library/Caches/com.nyora.mac",
+    "~/Library/Application Support/app.nyora.desktop.preview",
+    "~/Library/Caches/app.nyora.desktop.preview",
+    "~/Library/Preferences/app.nyora.desktop.preview.plist",
+    "~/Library/Saved Application State/app.nyora.desktop.preview.savedState",
   ]
 end

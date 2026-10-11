@@ -109,7 +109,7 @@ xattr -dr com.apple.quarantine "/Applications/Nyora.app"
 brew install --cask --no-quarantine nyora
 ```
 
-> Apple Silicon only for now (the build bundles an arm64 runtime). Intel Macs are not currently supported.
+> Apple Silicon and Intel Macs are both supported; Homebrew installs the matching build automatically. Requires macOS 14 (Sonoma) or later.
 
 The cask tracks releases of [`Hasan72341/nyora-mac`](https://github.com/Nyora-Manga/nyora-mac).
 
@@ -196,7 +196,7 @@ Subsequent `brew upgrade` runs repeat steps 2–4 whenever a newer `nyora-mac` r
 
 ## Requirements
 
-- **macOS on Apple Silicon (arm64).** The build bundles an arm64 runtime; Intel Macs are not supported at this time.
+- **macOS 14 (Sonoma) or later**, on Apple Silicon (arm64) or Intel (x64).
 - **[Homebrew](https://brew.sh) installed.** If you do not yet have it, follow the installer at [brew.sh](https://brew.sh).
 - A network connection for the initial download (the app itself works offline once chapters are downloaded).
 
@@ -252,8 +252,8 @@ It runs entirely on your Mac — Apple Vision OCR plus a bundled MangaOCR Core M
 **Does cloud sync share my library with my other devices?**
 Yes — signing in to your Nyora Cloud account (email and password) syncs your library, categories, history, bookmarks and reading progress across every Nyora platform, so you resume on your Mac where your phone left off.
 
-**Why Apple Silicon only?**
-The published build bundles an arm64 runtime; an Intel (x86_64) build is not currently available.
+**Does it run on Intel Macs?**
+Yes. Since 3.1.12 the cask ships both Apple Silicon (arm64) and Intel (x64) builds and Homebrew picks the right one for your Mac.
 
 ## Nyora on Every Platform
 
