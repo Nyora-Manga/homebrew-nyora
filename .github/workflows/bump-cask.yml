@@ -1,0 +1,28 @@
+name: Bump cask to the latest Nyora release
+on:
+  schedule:
+    - cron: '41 * * * *'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: bump-cask
+  cancel-in-progress: false
+jobs:
+  bump:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - id: bump
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: scripts/bump-cask.sh
+      - if: steps.bump.outputs.version != ''
+        env:
+          VERSION: ${{ steps.bump.outputs.version }}
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898283+github-actions[bot]@users.noreply.github.com'
+          git commit -am "cask: update to $VERSION"
+          git push
